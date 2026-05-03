@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import xyz.tapcaferush.jglsrc.game.CafeLevel
 import xyz.tapcaferush.jglsrc.navigation.Routes
 import xyz.tapcaferush.jglsrc.ui.theme.AmberGlow
 import xyz.tapcaferush.jglsrc.ui.theme.CoralAccent
@@ -101,7 +102,7 @@ fun HomeScreen(nav: NavHostController) {
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Five difficulty floors. Each keeps its own stats. Chain serves before the bar empties.",
+                        text = "Six difficulty floors. Each keeps its own stats. Chain serves before the bar empties.",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center
@@ -168,7 +169,7 @@ fun HomeScreen(nav: NavHostController) {
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    MiniStat("5", "shifts", Modifier.weight(1f))
+                    MiniStat(CafeLevel.ALL.size.toString(), "shifts", Modifier.weight(1f))
                     MiniStat("3", "drinks", Modifier.weight(1f))
                     MiniStat("24", "combo cap", Modifier.weight(1f))
                 }

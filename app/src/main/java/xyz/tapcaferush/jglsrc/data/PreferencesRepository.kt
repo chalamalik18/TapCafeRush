@@ -97,7 +97,7 @@ class PreferencesRepository(private val context: Context) {
     }
 
     companion object {
-        const val LEVEL_COUNT = 5
+        const val LEVEL_COUNT = 6
 
         private val VIBRATION_ENABLED = booleanPreferencesKey("vibration_enabled")
 

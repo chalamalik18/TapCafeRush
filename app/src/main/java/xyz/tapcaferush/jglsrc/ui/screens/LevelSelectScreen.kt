@@ -30,6 +30,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,12 +48,20 @@ import xyz.tapcaferush.jglsrc.ui.theme.LevelBackdrops
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LevelSelectScreen(nav: NavHostController) {
+    var backPressed by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Levels") },
                 navigationIcon = {
-                    IconButton(onClick = { nav.popBackStack() }) {
+                    IconButton(
+                        enabled = !backPressed,
+                        onClick = {
+                            backPressed = true
+                            nav.popBackStack()
+                        }
+                    ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
@@ -235,6 +247,6 @@ private fun PaceMeter(label: String, value: Float, color: Color) {
 }
 
 private fun headerTextColor(levelId: Int): Color =
-    if (levelId == 5) Color.White else Color(0xFF3E2723)
+    if (levelId >= 5) Color.White else Color(0xFF3E2723)
 
 private fun Float.formatOne(): String = "%.1f".format(this)

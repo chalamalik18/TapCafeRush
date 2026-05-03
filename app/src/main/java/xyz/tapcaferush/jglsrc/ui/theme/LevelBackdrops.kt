@@ -35,10 +35,15 @@ object LevelBackdrops {
             Color(0xFFFF8A65),
             Color(0xFF5E35B1)
         )
-        else -> listOf(
+        5 -> listOf(
             Color(0xFF0D1B2A),
             Color(0xFF1B263B),
             Color(0xFF006064)
+        )
+        else -> listOf(
+            Color(0xFF12002F),
+            Color(0xFF283593),
+            Color(0xFF26C6DA)
         )
     }
 
@@ -47,6 +52,7 @@ object LevelBackdrops {
         2 -> Color(0xFF2E7D32)
         3 -> Color(0xFF37474F)
         4 -> Color(0xFFD84315)
-        else -> Color(0xFF00E5FF)
+        5 -> Color(0xFF00E5FF)
+        else -> Color(0xFF7CFFCB)
     }
 }

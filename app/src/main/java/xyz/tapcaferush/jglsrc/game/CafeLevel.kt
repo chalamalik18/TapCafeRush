@@ -85,6 +85,20 @@ data class CafeLevel(
                 rushOrderFactor = 0.48f,
                 wrongPenalty = 6,
                 vipChance = 0.18f
+            ),
+            CafeLevel(
+                id = 6,
+                title = "Finale frenzy",
+                themeLabel = "Aurora roastery",
+                tagline = "Northern lights, packed counter, fastest tickets of the night.",
+                targetOrders = 32,
+                baseOrderMs = 2_500f,
+                rushIntervalMs = 20_000f,
+                rushDurationMs = 7_500f,
+                rushScoreMult = 1.22f,
+                rushOrderFactor = 0.44f,
+                wrongPenalty = 8,
+                vipChance = 0.22f
             )
         )
 

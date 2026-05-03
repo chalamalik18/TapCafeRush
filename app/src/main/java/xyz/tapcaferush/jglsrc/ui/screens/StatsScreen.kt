@@ -54,7 +54,7 @@ import xyz.tapcaferush.jglsrc.ui.theme.LevelBackdrops
 fun StatsScreen(nav: NavHostController) {
     val repo = (LocalContext.current.applicationContext as TapCafeApp).preferencesRepository
     val all by repo.allLevelsStats.collectAsStateWithLifecycle(
-        initialValue = List(5) { LevelStatsSnapshot() }
+        initialValue = List(CafeLevel.ALL.size) { LevelStatsSnapshot() }
     )
     val bestAny = all.maxOfOrNull { it.bestScore } ?: 0
     val totalShifts = all.sumOf { it.shiftsPlayed }

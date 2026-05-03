@@ -61,6 +61,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import xyz.tapcaferush.jglsrc.TapCafeApp
+import xyz.tapcaferush.jglsrc.game.CafeLevel
 import xyz.tapcaferush.jglsrc.game.Drink
 import xyz.tapcaferush.jglsrc.game.GameUiState
 import xyz.tapcaferush.jglsrc.game.GameViewModel
@@ -93,7 +94,8 @@ fun GameScreen(nav: NavHostController, levelId: Int) {
     }
 
     val lid = state.level.id
-    val nightBar = lid == 5
+    val finalLevelId = CafeLevel.ALL.last().id
+    val nightBar = lid >= 5
     Scaffold(
         topBar = {
             TopAppBar(
@@ -237,7 +239,7 @@ fun GameScreen(nav: NavHostController, levelId: Int) {
             onDismissRequest = { },
             title = {
                 Text(
-                    text = if (lid < 5) "Level cleared" else "Final level cleared",
+                    text = if (lid < finalLevelId) "Level cleared" else "Final level cleared",
                     style = MaterialTheme.typography.headlineSmall
                 )
             },
@@ -273,7 +275,7 @@ fun GameScreen(nav: NavHostController, levelId: Int) {
                     ) {
                         Text("Main menu")
                     }
-                    if (lid < 5) {
+                    if (lid < finalLevelId) {
                         TextButton(
                             onClick = {
                                 val next = lid + 1

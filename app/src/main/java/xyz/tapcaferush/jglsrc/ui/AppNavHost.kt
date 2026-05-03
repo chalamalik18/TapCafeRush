@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import xyz.tapcaferush.jglsrc.game.CafeLevel
 import xyz.tapcaferush.jglsrc.navigation.Routes
 import xyz.tapcaferush.jglsrc.ui.screens.GameScreen
 import xyz.tapcaferush.jglsrc.ui.screens.HomeScreen
@@ -28,7 +29,7 @@ fun AppNavHost(nav: NavHostController) {
             )
         ) { entry ->
             val raw = entry.arguments?.getInt("levelId") ?: 1
-            val levelId = raw.coerceIn(1, 5)
+            val levelId = raw.coerceIn(1, CafeLevel.ALL.last().id)
             GameScreen(nav, levelId)
         }
         composable(Routes.STATS) { StatsScreen(nav) }
