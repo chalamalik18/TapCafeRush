@@ -60,12 +60,12 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import xyz.tapcaferush.jglsrc.TapCafeApp
 import xyz.tapcaferush.jglsrc.game.Drink
 import xyz.tapcaferush.jglsrc.game.GameUiState
 import xyz.tapcaferush.jglsrc.game.GameViewModel
 import xyz.tapcaferush.jglsrc.game.TrailDot
 import xyz.tapcaferush.jglsrc.navigation.Routes
-import xyz.tapcaferush.jglsrc.TapCafeApp
 import xyz.tapcaferush.jglsrc.ui.theme.LevelBackdrops
 import kotlin.math.ceil
 

@@ -22,14 +22,17 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -92,72 +95,146 @@ private fun LevelCard(level: CafeLevel, onPlay: () -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(22.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(8.dp)
+                    .height(104.dp)
                     .background(
                         brush = LevelBackdrops.horizontalBrush(level.id),
-                        shape = RoundedCornerShape(6.dp)
+                        shape = RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp)
                     )
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(16.dp)
             ) {
-                Column(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier.align(Alignment.BottomStart)) {
                     Text(
-                        text = "Level ${level.id}",
+                        text = "LEVEL ${level.id}",
                         style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary
+                        fontWeight = FontWeight.Black,
+                        color = headerTextColor(level.id).copy(alpha = 0.82f)
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = level.title,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurface
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Black,
+                        color = headerTextColor(level.id)
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                }
+                Surface(
+                    shape = RoundedCornerShape(999.dp),
+                    color = headerTextColor(level.id).copy(alpha = 0.18f),
+                    modifier = Modifier.align(Alignment.TopEnd)
+                ) {
                     Text(
                         text = level.themeLabel,
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.SemiBold,
-                        color = LevelBackdrops.accentFor(level.id)
-                    )
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = level.tagline,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = headerTextColor(level.id),
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Goal: ${level.targetOrders} orders · Patience ≈ ${(level.baseOrderMs * 0.5f / 1000f).formatOne()}s · Rush ≈ every ${(level.rushIntervalMs / 1000f).formatOne()}s · Rush lasts ${(level.rushDurationMs / 1000f).formatOne()}s",
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            FilledTonalButton(
-                onClick = onPlay,
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.PlayArrow,
-                    contentDescription = null,
-                    modifier = Modifier.padding(end = 6.dp)
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = level.tagline,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                Text("Start this level", style = MaterialTheme.typography.titleMedium)
+                Spacer(modifier = Modifier.height(12.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    InfoChip("Goal ${level.targetOrders}", Modifier.weight(1f))
+                    InfoChip("VIP ${(level.vipChance * 100).toInt()}%", Modifier.weight(1f))
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+                PaceMeter(
+                    label = "Speed",
+                    value = (level.id / CafeLevel.ALL.size.toFloat()).coerceIn(0.18f, 1f),
+                    color = LevelBackdrops.accentFor(level.id)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                PaceMeter(
+                    label = "Rush pressure",
+                    value = ((CafeLevel.ALL.size - level.rushIntervalMs / 10_000f) / 3.0f).coerceIn(0.2f, 1f),
+                    color = LevelBackdrops.accentFor(level.id)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "Patience approx ${(level.baseOrderMs * 0.5f / 1000f).formatOne()}s · Rush every ${(level.rushIntervalMs / 1000f).formatOne()}s · lasts ${(level.rushDurationMs / 1000f).formatOne()}s",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                FilledTonalButton(
+                    onClick = onPlay,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.PlayArrow,
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 6.dp)
+                    )
+                    Text("Start this level", style = MaterialTheme.typography.titleMedium)
+                }
             }
         }
     }
 }
+
+@Composable
+private fun InfoChip(text: String, modifier: Modifier = Modifier) {
+    Surface(
+        modifier = modifier,
+        shape = RoundedCornerShape(999.dp),
+        color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.72f)
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 7.dp)
+        )
+    }
+}
+
+@Composable
+private fun PaceMeter(label: String, value: Float, color: Color) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Text(
+                text = "${(value * 100).toInt()}%",
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                color = color
+            )
+        }
+        LinearProgressIndicator(
+            progress = { value },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(7.dp),
+            color = color,
+            trackColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    }
+}
+
+private fun headerTextColor(levelId: Int): Color =
+    if (levelId == 5) Color.White else Color(0xFF3E2723)
 
 private fun Float.formatOne(): String = "%.1f".format(this)
