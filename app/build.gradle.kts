@@ -12,8 +12,8 @@ android {
         applicationId = "xyz.tapcaferush.jglsrc"
         minSdk = 30
         targetSdk = 36
-        versionCode = 4
-        versionName = "4.0"
+        versionCode = 35
+        versionName = "3.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
