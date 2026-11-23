@@ -1,7 +1,7 @@
 <resources>
-    <color name="portal_activity_background">#063366</color>
-    <color name="portal_surface_bg">#063366</color>
-    <color name="portal_loader_color">#E5D34A</color>
+    <color name="portal_activity_background">#FFFFFF</color>
+    <color name="portal_surface_bg">#FFFFFF</color>
+    <color name="portal_loader_color">#000000</color>
     <style name="PortalWindowAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/portal_fade_in</item>
         <item name="android:activityOpenExitAnimation">@anim/portal_fade_out</item>
