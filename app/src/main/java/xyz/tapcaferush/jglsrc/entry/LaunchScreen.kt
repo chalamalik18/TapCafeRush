@@ -95,7 +95,7 @@ fun LaunchScreen(
             ) {
                 Text(
                     text = "Unable to reach the service",
-                    color = Color.White,
+                    color = Color.Black,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.ExtraBold,
                     textAlign = TextAlign.Center
@@ -103,7 +103,7 @@ fun LaunchScreen(
                 Spacer(Modifier.height(12.dp))
                 Text(
                     text = "Check your connection and try again. The service may be temporarily unavailable.",
-                    color = Color(0xFFB8B8B8),
+                    color = Color.Black,
                     fontSize = 14.sp,
                     lineHeight = 20.sp,
                     textAlign = TextAlign.Center
@@ -115,7 +115,7 @@ fun LaunchScreen(
             }
         } else {
             CircularProgressIndicator(
-                color = Color.White,
+                color = Color.Black,
                 strokeWidth = 3.dp,
                 modifier = Modifier.size(48.dp)
             )
